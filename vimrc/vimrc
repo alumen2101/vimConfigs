@@ -1,0 +1,458 @@
+" ========================================================================== "
+" ---------------------------------- INDEXES ------------------------------- "
+" ========================================================================== "
+" Vundle Configurations
+" Color Scheme Configurations
+" General Configurations
+" General KEYBINDINGS
+" NETRW Configurations
+" SPLITS and TABBED FILES
+" Compiling
+" PopupTimeNow
+" Close Paranthesis
+" HlSearch Configurations
+" The 81st Column
+" Vim-Airline Configurations
+" COC Plugin Configurations
+" Vim-Javascript Configurations
+" Emmet-Vim Configurations
+
+
+" ========================================================================== "
+" --------------------------- VUNDLE CONFIGURATIONS ------------------------ "
+" ========================================================================== "
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'haishanh/night-owl.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+call vundle#end()
+" ========================================================================== "
+" ------------------------ COLOR SCHEME CONFIGURATIONS --------------------- "
+" ========================================================================== "
+
+syntax enable
+
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+set background=dark
+
+colorscheme night-owl
+
+
+" ========================================================================== "
+" --------------------------- GENERAL CONFIGURATIONS ----------------------- "
+" ========================================================================== "
+
+" rest the cursor in start
+augroup myCmds
+    au!
+    autocmd VimEnter * silent !echo -ne "\e[1 q"
+augroup END
+
+filetype indent on
+filetype plugin indent on
+
+set nowrap
+set relativenumber
+set number
+set numberwidth=4
+set shiftround
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set encoding=utf-8
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=3                    "give more space for displaying messages
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+set nocompatible  " dont assume I know Vi
+
+"finding files
+set path+=**
+set wildmenu
+
+
+" controling white space
+set listchars=tab:>~,nbsp:_,trail:.
+set list
+
+" changing the shape of the cursor for Insert and Normal mode
+" &t_SI ---> insert mode
+" &t_EI ---> normal mode
+let &t_SI = "\e[2 q"
+let &t_EI = "\e[1 q"
+
+
+" ========================================================================== "
+" ---------------------------- GENERAL KEYBINDINGS ------------------------- "
+" ========================================================================== "
+
+" <leader> Key is set to <Space>
+let mapleader = " "
+
+" swapping ';' and ':' for ex mode
+nnoremap ; :
+nnoremap : ;
+
+" insert mode: uppercase the current word, switches to insert mode at the beggining of the next word
+imap <c-u> <esc>viw~<esc>ea
+
+" normal mode: clear the highlights of the hlsearch with Ctrl-l
+nnoremap <nowait><silent> <leader>L :noh<CR>
+
+" normal mode: changing the function call by 'N'/'n' in hlsearch
+nnoremap <silent> n n:call HLNext(0.4)<CR>
+nnoremap <silent> N N:call HLNext(0.4)<CR>
+
+"open vimrc from anywhere
+nnoremap <leader>vimrc :e ~/.vimrc<CR>
+
+" ========================================================================== "
+" ---------------------------- NETRW CONFIGURATIONS ------------------------ "
+" ========================================================================== "
+" netrw-browse-maps
+" ------------------------------- KEYBIDNINGS ------------------------------ "
+nnoremap <leader>ll :Lexplore<CR>
+nnoremap <leader>la :Lexplore %:p:h<CR>
+
+" ----------------------------- NETRW SETTINGS ----------------------------- "
+"  Whether banner shows or not
+let g:netrw_banner = 0
+
+" 1-opens file in new horz win
+" 2-opens file in new vert win
+" 3-opens file in new tab
+" 4-opens file in previous win
+let g:netrw_browse_split = 4
+
+" width of directory explorer
+let g:netrw_winsize = 23
+
+let g:netrw_altv = 1
+
+let g:netrw_liststyle = 3
+
+augroup ProjectDrawer
+    autocmd!
+    " Open NETRW on startup
+    autocmd VimEnter * :Lexplore
+augroup END
+
+function! NetrwMapping()
+" Mapping for NETRW buffer
+
+    " =========== NAVIGATION ========== "
+    "go back in history
+    nmap <buffer> H u
+
+    "go up in directory"
+    nmap <buffer> h -^
+
+    " open a dir or file"
+    nmap <buffer> l <CR>
+
+    " toggle the dot files"
+    nmap <buffer> . gh
+
+    " close the preview window"
+    nmap <buffer> P <C-w>z
+
+    " open a file and close Netrw"
+    nmap <buffer> <leader>c <CR>:Lexplore<CR>
+
+    "just close the netrw"
+    nmap <buffer> <leader>dd :Lexplore<cr>
+
+
+    " ========== MARKING FILES ========== "
+    " toggles the mark on a file or dir
+    nmap <buffer> <Tab> mf
+
+    " will unmark all the files in the current buffer"
+    nmap <buffer> <S-Tab> mF
+
+    " will remove all the marks on all the files"
+    nmap <buffer> <leader><Tab> mu
+
+    " ========== FILE MANAGING ========== "
+    " will create a file for real"
+    nmap <buffer> ff %:w<CR>:buffer #<CR>
+
+    " will rename a file"
+    nmap <buffer> fr R
+
+    " copy the marked files"
+    nmap <buffer> fc mc
+
+    " use this to skip a step, after you mark your files you can put the
+    " cursor in a dir and and this will assign the target dir and copy in inbe
+    " step
+    nmap <buffer> fC mtmc
+
+    " will move marked files
+    nmap <buffer> fx mm
+
+    " Same thing as fC but for moving files"
+    nmap <buffer> fX mtmm
+
+    " will be running external commands on the marked files"
+    nmap <buffer> f; mx
+
+    " ========== BOOKMARKS ========== "
+    " create a bookmark
+    nmap <buffer> bb mb
+
+    " remove the most recent bookmark
+    nmap <buffer> bd mB
+
+    " jump to the most recent bookmark
+    nmap <buffer> bl gb
+
+    " ========== VARIETY ========== "
+    "show a list of marked files"
+    nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
+
+endfunction
+
+" Apply all the mappings when NETRW buffer is open
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+
+
+" ========================================================================== "
+" --------------------------- SPLIT AND TABBED FILES ----------------------- "
+" ========================================================================== "
+set splitbelow splitright
+
+nnoremap <C-e> :vs<Cr>
+nnoremap <C-o> :split<Cr>
+map <leader>tt ;vnew term://bash<Cr>
+"remap split navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" split resizing
+nnoremap <silent> <C-Left> :vertical resize +3<Cr>
+nnoremap <silent> <C-Right> :vertical resize -3<Cr>
+nnoremap <silent> <C-Up> :resize +3<Cr>
+nnoremap <silent> <C-Down> :resize -3<Cr>
+
+"change splits from horz to vert and vice versa
+map <leader>th <C-w>t<C-w>H
+map <leader>tk <C-w>t<C-w>K
+
+" ========================================================================== "
+" --------------------------------- COMPILING ------------------------------ "
+" ========================================================================== "
+
+function! CompileRun()
+
+    exec "w"
+
+    if &filetype == 'c'
+        exec "!gcc % -o %<"
+        exec "!time ./%<"
+
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+
+    elseif &filetype == 'sh'
+        exec "!time bash %"
+
+    elseif &filetype == 'python'
+        exec "!time python3 %"
+
+    endif
+
+endfunction
+
+" <F5> will compile and run
+nnoremap <F5> :call CompileRun()<CR>
+
+" save and run VimScript files
+nnoremap <leader>sop :w<CR>:source %<CR>
+
+
+" ========================================================================== "
+" --------------------------------- POPUP TIME ----------------------------- "
+" ========================================================================== "
+
+function! PopupTimeNow()
+    let l:time = strftime('%T')
+    call popup_notification(l:time, #{pos:'topleft', time:1500, highlight: 'SpecialKey', padding: [0,0,0,0], border: [0,0,0,0],  })
+endfunction
+
+nnoremap <leader>time :call PopupTimeNow()<CR>
+
+
+" ========================================================================== "
+" ------------------------------ CLOSE PARENTHSIS -------------------------- "
+" ========================================================================== "
+
+" return a corresponding parn to be sent to the buffer
+function! CloseParen()
+    let parenpairs = {'(' : ')',
+                    \  '[' : ']',
+                    \  '{' : '}'}
+
+    let [m_lnum, m_col] = searchpairpos('[[({]', '', '[\])}]', 'nbW')
+
+    if (m_lnum != 0) && (m_col != 0)
+        let c = getline(m_lnum)[m_col - 1]
+        return parenpairs[c]
+    endif
+    return ''
+endfun
+
+imap <C-]> <C-r>=CloseParen()<CR>
+
+
+" ========================================================================== "
+" -------------------------- HLSEARCH CONFIGURATIONS ----------------------- "
+" ========================================================================== "
+
+" Configuring hlsearch shenanigans
+set hlsearch
+
+" function - highlight matches when jumping to next
+function! HLNext(blinktime)
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'),col),@/))
+    let target_pat = '\c\%#'.@/
+    let blinks = 3
+    for n in range(1,blinks)
+        let red = matchadd('DiffText', target_pat, 101)
+        redraw
+        exec 'sleep' . float2nr(a:blinktime / (2*blinks) * 1000) . 'm'
+        call matchdelete(red)
+        redraw
+        exec 'sleep' . float2nr(a:blinktime / (2*blinks) * 1000) . 'm'
+    endfor
+endfunction
+
+
+" ========================================================================== "
+" ------------------------------ THE 81st COLUMN --------------------------- "
+" ========================================================================== "
+
+" Make the 81st column stand out
+highlight ColorColumn ctermbg=DarkCyan
+
+call matchadd('ColorColumn', '\%81v', 100)
+
+
+" ========================================================================== "
+" ----------------------- VIM-AIRLINE CONFIGURATIONS ----------------------- "
+" ========================================================================== "
+
+let g:airline_theme='deus'
+
+
+
+" ========================================================================== "
+" -------------------------- COC PLUGIN CONFIGURATION ---------------------- "
+" ========================================================================== "
+
+highlight CocFloating ctermbg=3
+
+" ------------------------------- KEYBIDNINGS ------------------------------ "
+inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" user <c-space> to trigger completion
+inoremap <silent><expr> <c-@> coc#refresh()
+
+" make <CR> auto-select the first completion item and notifycoc.nvim to
+" format on enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" use `]g` and `[g` to navigate diagnostics
+" use `:CocDiagnostics` to get all diagnostics of curren buffer in location list
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+endfunction
+
+" ------------------------------- AUGROUPS ------------------------------ "
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+augroup colorscheme_coc_setup | au!
+    au ColorScheme * call s:my_colors_setup()
+augroup END
+
+augroup mygroup
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder.
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+
+" ========================================================================== "
+" ----------------------- VIM-JAVASCRIPT CONFIGURATIONS -------------------- "
+" ========================================================================== "
+
+let g:javascript_plugin_jsdoc = 1 "enables syntax hl for JSDocs
+let g:javascript_plugin_ngdoc = 1 "enables syntax hl for NGDocs
+
+
+" ========================================================================== "
+" ------------------------- EMMET-VIM CONFIGURATIONS ----------------------- "
+" ========================================================================== "
+
+" enable emmet functionality in all modes( 'n' for just normal mode)
+let g:user_emmet_mode='a' 
+let g:user_emmet_install_global = 0
+
+autocmd FileType html,css EmmetInstall  " enable for just html and css
+
+" remap the leader key to Ctrl-z, the trailing ',' is still needed
+let g:user_emmet_leader_key='<C-Z>'  
