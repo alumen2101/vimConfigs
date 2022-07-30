@@ -51,7 +51,8 @@ return packer.startup(function(use)
   use "jaredgorski/fogbell.vim"           -- fogbell
   use "whatyouhide/vim-gotham"            -- gothom
   use "cocopon/iceberg.vim"               -- iceberg
-
+  use "NLKNguyen/papercolor-theme"        -- papercolor
+  use "tpope/vim-vividchalk"              -- vividchalk
    -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
   use "hrsh7th/cmp-buffer" -- buffer completions

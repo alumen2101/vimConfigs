@@ -33,13 +33,14 @@ local options = {
     scrolloff = 4,
     sidescrolloff = 8,
     guifont = "monospace:h17",
+    background = "dark",
 }
 
 vim.opt.shortmess:append "c"
 
 -- Tokyonight options
 --vim.g.tokyonight_style = "night"
-vim.cmd[[colorscheme deep-space]]
+vim.cmd[[ colorscheme torte ]]
 --vim.g.tokyonight_italic_comments = false
 --vim.g.tokyonight_italic_keywords = false
 
