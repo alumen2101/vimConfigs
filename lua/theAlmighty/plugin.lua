@@ -40,57 +40,70 @@ packer.init {
 
 -- Install your plugins here
 return packer.startup(function(use)
-  -- My plugins here
-  use "wbthomason/packer.nvim"
-  use "nvim-lua/popup.nvim"
-  use "nvim-lua/plenary.nvim"
+    -- My plugins here
+    use "wbthomason/packer.nvim"
+    use "nvim-lua/popup.nvim"
+    use "nvim-lua/plenary.nvim"
 
-  -- colorschemes
-  use "folke/tokyonight.nvim"
-  use "tyrannicaltoucan/vim-deep-space"   -- deep-space
-  use "jaredgorski/fogbell.vim"           -- fogbell
-  use "whatyouhide/vim-gotham"            -- gothom
-  use "cocopon/iceberg.vim"               -- iceberg
-  use "NLKNguyen/papercolor-theme"        -- papercolor
-  use "tpope/vim-vividchalk"              -- vividchalk
-   -- cmp plugins
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-nvim-lua"
+    -- colorschemes
+    use "folke/tokyonight.nvim"
+    use "tyrannicaltoucan/vim-deep-space"   -- deep-space
+    use "jaredgorski/fogbell.vim"           -- fogbell
+    use "whatyouhide/vim-gotham"            -- gothom
+    use "cocopon/iceberg.vim"               -- iceberg
+    use "NLKNguyen/papercolor-theme"        -- papercolor
+    use "tpope/vim-vividchalk"              -- vividchalk
 
-  -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+     -- cmp plugins
+    use "hrsh7th/nvim-cmp" -- The completion plugin
+    use "hrsh7th/cmp-buffer" -- buffer completions
+    use "hrsh7th/cmp-path" -- path completions
+    use "hrsh7th/cmp-cmdline" -- cmdline completions
+    use "saadparwaiz1/cmp_luasnip" -- snippet completions
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-nvim-lua"
 
-  -- LSP
-  use "neovim/nvim-lspconfig"
-  use "williamboman/nvim-lsp-installer"
+    -- snippets
+    use "L3MON4D3/LuaSnip" --snippet engine
+    use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
-  -- telescope
-  use "nvim-telescope/telescope.nvim"
+    -- LSP
+    use "neovim/nvim-lspconfig"
+    use "williamboman/nvim-lsp-installer"
 
- -- -- treesitter
-  use "nvim-treesitter/nvim-treesitter"
-  use "p00f/nvim-ts-rainbow"
-  use "nvim-treesitter/playground"
+    -- telescope
+    use "nvim-telescope/telescope.nvim"
 
-  -- nvim-tree
-  use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua"
+   -- -- treesitter
+    use "nvim-treesitter/nvim-treesitter"
+    use "p00f/nvim-ts-rainbow"
+    use "nvim-treesitter/playground"
 
-  -- buffer Line
-  use "akinsho/bufferline.nvim"
-  use "moll/vim-bbye"
+    -- nvim-tree
+    use "kyazdani42/nvim-web-devicons"
+    use "kyazdani42/nvim-tree.lua"
 
-  -- autopairs
-  use "windwp/nvim-autopairs"
+    -- buffer Line
+    use "akinsho/bufferline.nvim"
+    use "moll/vim-bbye"
 
-  -- alpha
-  use "goolord/alpha-nvim"
+    -- autopairs
+    use "windwp/nvim-autopairs"
+
+    -- alpha
+    use "goolord/alpha-nvim"
+
+    -- impatient
+    use "lewis6991/impatient.nvim"
+
+    -- indent Line
+    use "lukas-reineke/indent-blankline.nvim"
+
+    -- lua Line
+    use "nvim-lualine/lualine.nvim"
+
+    -- html auto tag
+    use "windwp/nvim-ts-autotag"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
